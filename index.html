@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeechGenie | AI Text-to-Speech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-circle"><span>SG</span></div>
+            <h1>SpeechGenie</h1>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                 <!-- ## Added Back FULL Popup Content ## -->
+                 <li><a onclick="openPopup('About SpeechGenie', '<h4>Welcome to SpeechGenie!</h4><p>Instantly convert your text into incredibly natural-sounding speech using our advanced AI technology.</p><p>Select from a wide range of voices, type your text, and bring your words to life.</p>')">About</a></li>
+                 <li><a onclick="openPopup('How to Use', '<h4>Easy Steps:</h4><ol><li>Browse or search the voice list below.</li><li>Click on a voice to select it.</li><li>Enter your text in the text area.</li><li>Click <strong>Generate Audio</strong>.</li><li>Listen using the player or click Download.</li></ol>')">How To Use</a></li>
+                 <li><a onclick="openPopup('Frequently Asked Questions (FAQ)', `
+                    <h4>How does SpeechGenie work?</h4>
+                    <p>SpeechGenie uses sophisticated Artificial Intelligence to analyze your text and generate human-like speech based on the voice you select.</p>
+                    <h4>What languages are supported?</h4>
+                    <p>Our AI attempts to automatically detect the language of your input text and works with many languages, especially when using multilingual voices.</p>
+                    <h4>Is the text I enter stored?</h4>
+                    <p>No. We prioritize your privacy. The text you enter is processed to generate audio and is <strong>not stored</strong> by SpeechGenie after processing.</p>
+                    <h4>Why did my audio generation fail?</h4>
+                    <p>Generation can sometimes fail due to temporary connection issues, complex text, or service load. Please try again after a short wait. If the problem persists, try simplifying the text.</p>
+                    <h4>How do I select a different voice?</h4>
+                    <p>Simply click on any voice card in the slider below. The highlighted voice is the currently selected one.</p>
+                    <h4>Can I change the speed or pitch?</h4>
+                    <p>Currently, direct speed and pitch controls are not available in this interface. The characteristics are based on the chosen voice model.</p>
+                 `)">FAQ</a></li>
+                 <li>
+                     <button id="theme-toggle" aria-label="Toggle light/dark theme">
+                         <i class="fas fa-sun"></i> <i class="fas fa-moon"></i>
+                     </button>
+                 </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="tts-container">
+            <h2>Generate Realistic Speech</h2>
+            <section class="voice-selection-section">
+                <label class="section-label">1. Select Voice & Filters</label>
+                <div class="search-filter-row"><div class="search-container"><input type="search" id="voice-search" placeholder="Search voices..."><i class="fas fa-search search-icon"></i></div><button id="filter-toggle-btn" class="filter-toggle-button" aria-label="Toggle voice filters" aria-expanded="false"><i class="fas fa-filter"></i> <span>Filters</span></button></div>
+                <div id="filter-panel" class="filter-panel"><h4>Filter By:</h4><div class="filter-options"><div class="filter-group"><label for="filter-gender">Gender:</label><select id="filter-gender"><option value="">All</option></select></div><div class="filter-group"><label for="filter-age">Age:</label><select id="filter-age"><option value="">All</option></select></div><div class="filter-group"><label for="filter-accent">Accent:</label><select id="filter-accent"><option value="">All</option></select></div></div><button id="clear-filters-btn" class="clear-button small-button"><i class="fas fa-times"></i> Clear Filters</button></div>
+                <div class="voice-slider-wrapper"><div class="loading-voices"><div class="spinner"></div><p>Loading voices...</p></div><div id="voice-swiper" class="swiper voice-swiper-container" style="display: none;"><div class="swiper-wrapper" id="voice-list"></div><div class="swiper-button-prev"></div><div class="swiper-button-next"></div></div><p id="no-voices-message" class="status-message status-info" style="display: none;"></p></div>
+            </section>
+            <section class="text-input-section">
+                 <label for="text-input" class="section-label">2. Enter Your Text</label>
+                 <div class="textarea-container"><textarea id="text-input" rows="6" placeholder="Type or paste text..."></textarea><div class="text-actions"><button id="copy-text-btn" title="Copy Text"><i class="fas fa-copy"></i></button><button id="clear-text-btn" title="Clear Text"><i class="fas fa-trash"></i></button></div></div>
+            </section>
+            <section class="generation-output-section">
+                 <label class="section-label">3. Generate & Play</label>
+                 <div id="status-message" class="status-message status-info">Select a voice and enter text.</div>
+                 <div class="button-controls">
+                     <!-- ## Button Structure back to Icon + Text Span ## -->
+                     <button id="generate-btn" class="action-button generate-button">
+                         <i class="fas fa-play button-icon"></i>
+                         <span class="button-text-span">Generate Audio</span>
+                         <!-- No separate loader div needed now -->
+                     </button>
+                     <a id="download-btn" class="action-button download-button" href="#" download="speechgenie_audio.mp3"><i class="fas fa-download"></i> Download</a>
+                 </div>
+                 <div id="audio-player-container" class="audio-player-container" style="display: none;"><audio id="audio-player" controls></audio></div>
+                 <div id="error-message" class="error-message" style="display: none;"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+             <!-- ## Added Back FULL Popup Content ## -->
+             <a onclick="openPopup('Privacy Policy', '<h4>Data Privacy</h4><p>SpeechGenie is committed to protecting your privacy. The text entered is processed solely for audio generation and is <strong>not stored</strong> after processing.</p><p>Audio generation involves processing by a specialized speech synthesis provider. This provider handles data according to its own privacy policies.</p><p>We may use local storage in your browser to save preferences like your theme choice, but this does not store personal data.</p>')">Privacy Policy</a>
+             <a onclick="openPopup('Terms of Service', '<h4>Usage Terms</h4><p>Welcome to SpeechGenie! Please use this tool responsibly. Audio quality depends on the selected voice and settings.</p><p>Please ensure you have the rights to any text content you convert.</p>')">Terms of Service</a>
+             <a onclick="openPopup('Contact Us', '<h4>Contact SpeechGenie</h4><p>Questions or feedback? Contact our team:</p><p>Email: support@speechgenie.example.com</p>')">Contact Us</a>
+        </div>
+        <div class="social-icons">
+             <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+             <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+             <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <p>© 2024 SpeechGenie. All rights reserved.</p>
+    </footer>
+
+    <!-- Popup Structure -->
+    <div id="popupOverlay"><div id="popupContent"><span id="popupClose" onclick="closePopup()">×</span><h3 id="popupTitle">Popup Title</h3><div id="popupBody"></div></div></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
