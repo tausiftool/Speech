@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpeechGenie | AI Text-to-Speech</title>
+    <title>SpeechGenie AI | AI Text-to-Speech</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,20 +16,20 @@
     <header class="header">
         <div class="logo">
             <div class="logo-circle"><span>SG</span></div>
-            <h1>SpeechGenie</h1>
+            <h1>SpeechGenie AI</h1>
         </div>
         <nav>
             <ul class="nav-links">
                  <!-- ## Added Back FULL Popup Content ## -->
-                 <li><a onclick="openPopup('About SpeechGenie', '<h4>Welcome to SpeechGenie!</h4><p>Instantly convert your text into incredibly natural-sounding speech using our advanced AI technology.</p><p>Select from a wide range of voices, type your text, and bring your words to life.</p>')">About</a></li>
-                 <li><a onclick="openPopup('How to Use', '<h4>Easy Steps:</h4><ol><li>Browse or search the voice list below.</li><li>Click on a voice to select it.</li><li>Enter your text in the text area.</li><li>Click <strong>Generate Audio</strong>.</li><li>Listen using the player or click Download.</li></ol>')">How To Use</a></li>
+                 <li><a onclick="openPopup('About SpeechGenie AI', '<h4>Welcome to SpeechGenie AI!</h4><p>Instantly convert your text into incredibly natural-sounding speech using our advanced AI technology.</p><p>Select from a wide range of voices and bring your words to life.</p>')">About</a></li>
+                 <li><a onclick="openPopup('How to Use', '<h4>Easy Steps:</h4><ol><li>Browse or search the voice list below.</li><li>Click on a voice to select it.</li><li>Enter your text in the text area.</li><li>Click <strong>Generate Audio</strong>.</li><li>Listen using the player or click Download.</li><i>______________________________________         Note: You can generate audio of up to 5000 characters at once.</li></ol>')">How To Use</a></li>
                  <li><a onclick="openPopup('Frequently Asked Questions (FAQ)', `
-                    <h4>How does SpeechGenie work?</h4>
-                    <p>SpeechGenie uses sophisticated Artificial Intelligence to analyze your text and generate human-like speech based on the voice you select.</p>
+                    <h4>How does SpeechGenie AI work?</h4>
+                    <p>SpeechGenie AI uses sophisticated Artificial Intelligence to analyze your text and generate human-like speech based on the voice you select.</p>
                     <h4>What languages are supported?</h4>
                     <p>Our AI attempts to automatically detect the language of your input text and works with many languages, especially when using multilingual voices.</p>
                     <h4>Is the text I enter stored?</h4>
-                    <p>No. We prioritize your privacy. The text you enter is processed to generate audio and is <strong>not stored</strong> by SpeechGenie after processing.</p>
+                    <p>No. We prioritize your privacy. The text you enter is processed to generate audio and is <strong>not stored</strong> by SpeechGenie AI after processing.</p>
                     <h4>Why did my audio generation fail?</h4>
                     <p>Generation can sometimes fail due to temporary connection issues, complex text, or service load. Please try again after a short wait. If the problem persists, try simplifying the text.</p>
                     <h4>How do I select a different voice?</h4>
@@ -58,10 +58,46 @@
             </section>
             <section class="text-input-section">
                  <label for="text-input" class="section-label">2. Enter Your Text</label>
-                 <div class="textarea-container"><textarea id="text-input" rows="6" placeholder="Type or paste text..."></textarea><div class="text-actions"><button id="copy-text-btn" title="Copy Text"><i class="fas fa-copy"></i></button><button id="clear-text-btn" title="Clear Text"><i class="fas fa-trash"></i></button></div></div>
+                <style>
+.textarea-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+}
+
+#text-input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.char-count {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  font-size: 12px;
+  color: #999;
+}
+</style>
+
+<div class="textarea-container">
+  <textarea id="text-input" rows="15" maxlength="5000" placeholder="Type or paste text for          lifelike speech..."maxlength=5999"></textarea><div class="text-actions"><button id="copy-text-btn" title="Copy Text"><i class="fas fa-copy"></i></button><button id="clear-text-btn" title="Clear Text"><i class="fas fa-trash"></i></button></div>
+  <div id="char-count" class="char-count">0 / 5000</div>
+</div>
+
+<script>
+const textarea = document.getElementById('text-input');
+const counter = document.getElementById('char-count');
+const maxChars = 5000;
+
+textarea.addEventListener('input', () => {
+  const currentLength = textarea.value.length;
+  counter.textContent = `${currentLength} / ${maxChars}`;
+});
+</script>
             </section>
-            <section class="generation-output-section">
-                 <label class="section-label">3. Generate & Play</label>
+            <section class="generation-output-section"><label class="section-label">3. Generate & Play</label>
                  <div id="status-message" class="status-message status-info">Select a voice and enter text.</div>
                  <div class="button-controls">
                      <!-- ## Button Structure back to Icon + Text Span ## -->
@@ -82,16 +118,22 @@
     <footer class="footer">
         <div class="footer-links">
              <!-- ## Added Back FULL Popup Content ## -->
-             <a onclick="openPopup('Privacy Policy', '<h4>Data Privacy</h4><p>SpeechGenie is committed to protecting your privacy. The text entered is processed solely for audio generation and is <strong>not stored</strong> after processing.</p><p>Audio generation involves processing by a specialized speech synthesis provider. This provider handles data according to its own privacy policies.</p><p>We may use local storage in your browser to save preferences like your theme choice, but this does not store personal data.</p>')">Privacy Policy</a>
-             <a onclick="openPopup('Terms of Service', '<h4>Usage Terms</h4><p>Welcome to SpeechGenie! Please use this tool responsibly. Audio quality depends on the selected voice and settings.</p><p>Please ensure you have the rights to any text content you convert.</p>')">Terms of Service</a>
-             <a onclick="openPopup('Contact Us', '<h4>Contact SpeechGenie</h4><p>Questions or feedback? Contact our team:</p><p>Email: support@speechgenie.example.com</p>')">Contact Us</a>
+             <a onclick="openPopup('Privacy Policy', '<h4>Data Privacy</h4><p>SpeechGenie AI is committed to protecting your privacy. The text entered is processed solely for audio generation and is <strong>not stored</strong> after processing.</p><p>Audio generation involves processing by a specialized speech synthesis provider. This provider handles data according to its own privacy policies.</p><p>We may use local storage in your browser to save preferences like your theme choice, but this does not store personal data.</p>')">Privacy Policy</a>
+             <a onclick="openPopup('Terms of Service', '<h4>Usage Terms</h4><p>Welcome to SpeechGenie AI! Please use this tool responsibly. Audio quality depends on the selected voice and settings.</p><p>Please ensure you have the rights to any text content you convert.</p>')">Terms of Service</a>
+             <a onclick="openPopup('Contact Us', '<h4>Contact SpeechGenie AI</h4><p>Questions or feedback? Contact our team:</p><p>Email: support@speechgenie.com</p>')">Contact Us</a>
         </div>
         <div class="social-icons">
-             <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
-             <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-             <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+             <a href="mailto:yourmail@example.com" title="Email me">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail Icon" width="26">
+</a>
+             <a href="https://www.instagram.com/shekhfootballer?igsh=M3F2eG82YnZ1OHB5" title="Instagram">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Icon" width="25" style="border-radius: 8px;">
+</a>
+             <a href="https://www.instagram.com/shekhfootballer?igsh=M3F2eG82YnZ1OHB5" title="Facebook">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook Icon" width="25" style="border-radius: 8px;">
+</a>
         </div>
-        <p>© 2024 SpeechGenie. All rights reserved.</p>
+        <p>© 2024 SpeechGenie AI. All rights reserved.</p>
     </footer>
 
     <!-- Popup Structure -->
